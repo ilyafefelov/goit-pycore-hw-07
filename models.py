@@ -2,6 +2,7 @@ from collections import UserDict
 import re
 from datetime import datetime, timedelta
 
+
 class Field:
     def __init__(self, value):
         self.value = value
@@ -9,15 +10,18 @@ class Field:
     def __str__(self):
         return str(self.value)
 
+
 class Name(Field):
     def __init__(self, name):
         super().__init__(name)
 
+
 class Phone(Field):
     def __init__(self, phone_number):
-        if not re.fullmatch(r'\d{10}', phone_number):
+        if not re.fullmatch(r"\d{10}", phone_number):
             raise ValueError("Phone number must be 10 digits.")
         super().__init__(phone_number)
+
 
 class Birthday(Field):
     def __init__(self, value):
@@ -26,6 +30,7 @@ class Birthday(Field):
         except ValueError:
             raise ValueError("Invalid date format. Use DD.MM.YYYY")
         super().__init__(self.value)
+
 
 class Record:
     """
@@ -135,9 +140,16 @@ class Record:
             raise ValueError("Invalid date format. Use DD.MM.YYYY") from e
 
     def __str__(self):
-        phones = '; '.join(p.value for p in self.phones)
-        birthday = self.birthday.value.strftime("%d.%m.%Y") if self.birthday else "No birthday set"
-        return f"Contact name: {self.name.value}, phones: {phones}, birthday: {birthday}"
+        phones = "; ".join(p.value for p in self.phones)
+        birthday = (
+            self.birthday.value.strftime("%d.%m.%Y")
+            if self.birthday
+            else "No birthday set"
+        )
+        return (
+            f"Contact name: {self.name.value}, phones: {phones}, birthday: {birthday}"
+        )
+
 
 class AddressBook(UserDict):
     """
@@ -226,20 +238,26 @@ class AddressBook(UserDict):
         try:
             today = datetime.today().date()
             upcoming_birthdays = []
-            
+
             for record in self.data.values():
                 if record.birthday:
                     birthday = record.birthday.value
-                    birthday_this_year = datetime(today.year, birthday.month, birthday.day).date()
-                    
+                    birthday_this_year = datetime(
+                        today.year, birthday.month, birthday.day
+                    ).date()
+
                     if birthday_this_year < today:
-                        birthday_this_year = datetime(today.year + 1, birthday.month, birthday.day).date()
-                    
+                        birthday_this_year = datetime(
+                            today.year + 1, birthday.month, birthday.day
+                        ).date()
+
                     days_before_birthday = (birthday_this_year - today).days
-                    
+
                     if days_before_birthday <= days:
-                        upcoming_birthdays.append(record.name.value)
-            
+                        upcoming_birthdays.append(
+                            (record.name.value, birthday_this_year)
+                        )
+
             return upcoming_birthdays
         except Exception as e:
             print(f"An error occurred in get_upcoming_birthdays: {str(e)}")
