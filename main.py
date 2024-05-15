@@ -224,23 +224,22 @@ def main():
                 "search": lambda: search_phone(args, book),
                 "delete": lambda: delete_contact(args, book),
                 "help": """ 
-                    add [ім'я] [**телефон]: Додати або новий контакт з іменем та телефонним номером, або телефонний номер к контакту який вже існує.
-                    change [ім'я] [старий телефон] [новий телефон]: Змінити телефонний номер для вказаного контакту.
-                    phone [ім'я]: Показати телефонні номери для вказаного контакту.
-                    all: Показати всі контакти в адресній книзі.
-                    add-birthday [ім'я] [дата народження]: Додати дату народження для вказаного контакту.
-                    show-birthday [ім'я]: Показати дату народження для вказаного контакту.
-                    birthdays: Показати дні народження, які відбудуться протягом наступного тижня.
-                    search [ім'я]: Search for contact.
-                    delete [ім'я]: Delete a contact.
-                    hello: Отримати вітання від бота.
-                    close або exit: Закрити програму.
+    add [ім'я] [**телефон]: Додати або новий контакт з іменем та телефонним номером, або телефонний номер к контакту який вже існує.
+    change [ім'я] [старий телефон] [новий телефон]: Змінити телефонний номер для вказаного контакту.
+    phone [ім'я]: Показати телефонні номери для вказаного контакту.
+    all: Показати всі контакти в адресній книзі.
+    add-birthday [ім'я] [дата народження]: Додати дату народження для вказаного контакту.
+    show-birthday [ім'я]: Показати дату народження для вказаного контакту.
+    birthdays: Показати дні народження, які відбудуться протягом наступного тижня.
+    search [ім'я]: Search for contact.
+    delete [ім'я]: Delete a contact.
+    hello: Отримати вітання від бота.
+    close або exit: Закрити програму.
                     """,
             }
             result = switcher.get(
                 command,
-                "Invalid command. Available commands: hello, add, add-birthday, show-birthday, birthdays \
-                                            change, phone, all, search, delete, upcoming, close, exit & help",
+                "Invalid command. Available commands: hello, add, add-birthday, show-birthday, birthdays, change, phone, all, search, delete, upcoming, close, exit & help",
             )
             return result() if callable(result) else result
 
