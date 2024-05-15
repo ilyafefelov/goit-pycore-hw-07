@@ -136,9 +136,8 @@ def search_phone(args, book):
     name = args[0]
     record = book.find(name)  # Will raise KeyError if not found, handled by decorator
     if record.phones:
-        return (
-            f"{name}'s numbers are: {', '.join(phone.value for phone in record.phones)}"
-        )
+        return f"{name}'s numbers are: {', '.join(phone.value for phone in record.phones)} \
+and his birthday is on {record.birthday.value.strftime('%d.%m.%Y')}."
     else:
         return f"No phone numbers found for {name}."
 
